@@ -1,23 +1,4 @@
 
-//VARIABLES
-
-/*
-var grid = [];
-var cellsScale = 4;
-var fps = 3;
-var rows = parseInt(canvas.height / cellsScale);
-var cols = parseInt(canvas.width / cellsScale);
-var cellsCount = 20;
-
-console.log(rows);
-console.log(cols)
-*/
-
-//return random int between min and max (inclusive max)
-function randomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function printTwoDimArray(arr) {
 	var rows = "";
 	for(var i = 0; i < arr.length; i++) {
@@ -27,6 +8,11 @@ function printTwoDimArray(arr) {
 		rows += "\n";
 	}
 	console.log(rows)
+}
+
+//return random int between min and max
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max)) + min;
 }
 
 function generateGrid(rows, cols) {
@@ -62,6 +48,28 @@ function printGrid(grid) {
 	printTwoDimArray(grid);
 }
 
-module.exports = {
-	
+var canvas = document.getElementById('gameCanvas');
+var ctx = canvas.getContext('2d');
+
+//VARIABLES
+var grid = [];
+var ratio = 4;
+var fps = 3;
+var canvasWidth = canvas.width;
+var canvasHeight = canvas.height;
+var rows = parseInt(canvasHeight / ratio);
+var cols = parseInt(canvasWidth / ratio);
+var cellsCount = 10;
+
+grid = generateGrid(rows, cols);
+grid = seedGrid(grid, 10);
+
+function draw() {
+	for (var i = 0; i < rows; i++) {
+		for (var j = 0; j < rows; j++) {
+			if(grid[i][j] == 1)
+				ctx.fillRect(i * ratio, j * ratio, ratio, ratio);	
+		};
+	};
 }
+draw();

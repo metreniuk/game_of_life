@@ -1,4 +1,5 @@
 #gameCanvas {
+	box-sizing: border-box;
 	border: 1px solid #000;
 	position: absolute;
 	margin: auto;
