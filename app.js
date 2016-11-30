@@ -48,6 +48,12 @@ function printGrid(grid) {
 	printTwoDimArray(grid);
 }
 
+//Canvas functions
+function drawCell(x, y) {
+	ctx.fillRect(x * ratio, y * ratio, ratio, ratio);	
+}
+
+/*
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 
@@ -66,10 +72,80 @@ grid = seedGrid(grid, 10);
 
 function draw() {
 	for (var i = 0; i < rows; i++) {
-		for (var j = 0; j < rows; j++) {
+		for (var j = 0; j < cols; j++) {
 			if(grid[i][j] == 1)
-				ctx.fillRect(i * ratio, j * ratio, ratio, ratio);	
+				drawCell(i, j);
 		};
 	};
+
 }
-draw();
+*/
+
+//n - neighbours alived
+function nextCell(cell, i, j, n) {
+	//Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+	//Any live cell with more than three live neighbours dies, as if by over-population.
+	if ((n < 2 || n > 3) && cell == 1) cell == 0;
+	//Any live cell with two or three live neighbours lives on to the next generation.
+	if ((n == 2 || n == 3) && cell == 1) cell == 1;
+	//Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+	if (n == 3 && cell == 0) cell == 1;
+	
+	return cell;
+}
+
+function isBorderCell(grid, i, j) {
+
+}
+
+//n - neighbours alived
+function nextGrid(oldGrid) {
+	var grid = oldGrid.slice();
+	var rows = grid.length;
+	var cols = grid[0].length;
+	var i = 0, j = 0, n = 0;
+
+//corners
+	if (i == 0 && j == 0) {
+		n = grid[i][j+1] + grid[i+1][j] + grid[i+1][j+1];
+	}
+
+	if (i == 0 && j == cols - 1) {
+		n = grid[i][j-1] + grid[i+1][j-1] + grid[i+1][j];
+	}
+
+	if (i == rows - 1 && j == 0) {
+		n = grid[i-1][j] + grid[i-1][j+1] + grid[i][j+1];
+	}
+
+	if (i == rows - 1 && j == cols -1) {
+		n = grid[i-1][j-1] + grid[i-1][j] + grid[i][j-1];
+	}
+//borders
+	if (i == 0) {
+		n = grid[i][j-1] + grid[i][j+1] + grid[i+1][j-1] + grid[i+1][j] + grid[i+1][j+1];
+	}
+
+	if (j == 0) {
+		n =  grid[i-1][j] + grid[i-1][j+1] + grid[i][j+1] + grid[i+1][j] + grid[i+1][j+1];
+	}
+
+	if (i == rows - 1) {
+		n = grid[i-1][j-1] + grid[i-1][j] + grid[i-1][j+1] + grid[i][j-1] + grid[i][j+1];
+	}
+
+	if (j == cols - 1) {
+		n = grid[i-1][j-1] + grid[i-1][j] + grid[i][j-1] + grid[i+1][j-1] + grid[i+1][j];
+	}
+//inside
+	n = grid[i-1][j-1] + grid[i-1][j] + grid[i-1][j+1] + grid[i][j-1] + grid[i][j+1] + grid[i+1][j-1] + grid[i+1][j] + grid[i+1][j+1];
+	//Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+	//Any live cell with more than three live neighbours dies, as if by over-population.
+	if ((n < 2 || n > 3) && grid1[i][j] == 1) grid2[i][j] == 0;
+	//Any live cell with two or three live neighbours lives on to the next generation.
+	if ((n == 2 || n == 3) && grid1[i][j] == 1) grid2[i][j] == 1;
+	//Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+	if (n == 3 && grid1[i][j] == 0) grid2[i][j] == 1;
+
+	return grid2;
+}
