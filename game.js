@@ -12,7 +12,9 @@ function printTwoDimArray(arr) {
 
 //return random int between min and max
 function randomInt(min, max) {
-	return Math.floor(Math.random() * (max)) + min;
+	min = Math.ceil(min);
+  	max = Math.floor(max);
+  	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 exports.generateGrid = function(rows, cols) {
@@ -55,9 +57,4 @@ exports.isAlive = function(grid, i, j) {
 		return true
 	else 
 		return false;
-}
-
-exports.nextGrid = function(grid1, grid2 i, j) {
-	var n = grid1[i-1][j-1] + grid1[i-1][j] + grid1[i-1][j+1] + grid1[i][j-1] + grid1[i][j+1] + grid1[i+1][j-1] + grid1[i+1][j] + grid1[i+1][j+1];
-	if ((n == 2 || n == 3) && grid1[i][j].isAlive)
 }
