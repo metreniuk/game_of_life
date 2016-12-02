@@ -1,28 +1,39 @@
 
 
+
+
 var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 
 //VARIABLES
 var grid = [];
-var CELL_RATIO = 6;
-var FPS = 5;
+var FPS = 10;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 var rows = parseInt(canvasHeight / CELL_RATIO);
 var cols = parseInt(canvasWidth / CELL_RATIO);
-var CELL_COUNT = 16000;
+var CELL_COUNT = 5000;
+var CELL_RATIO = 4;
 var CELL_COLOR = '';
 var CANVAS_COLOR = '';
 
-canvas.style.backgroundColor = CANVAS_COLOR;
+function setConfig() {
+	CELL_COUNT = document.getElementById('cellCount').value || (rows * cols) / 4;
+	CELL_RATIO = document.getElementById('cellRatio').value || 4;
+	rows = parseInt(canvasHeight / CELL_RATIO);
+	cols = parseInt(canvasWidth / CELL_RATIO);
+	CELL_COLOR = document.getElementById('cellColor').value || 'black';
+	CANVAS_COLOR = document.getElementById('backgroundColor').value || 'white';
+	canvas.style.backgroundColor = CANVAS_COLOR;	
+	var configForm = document.getElementById('configForm').style.visibility = 'hidden';
+	canvas.style.visibility = 'visible';
+	init();
+	start();
+}
 
-//init
 init();
-start();
-//fullScreen();
 
 function init() {
 	rows = parseInt(canvasHeight / CELL_RATIO);
@@ -66,16 +77,6 @@ function draw() {
 	init();
 	drawGrid(grid);
 	printGrid(grid);
-}
-
-function fullScreen () {
-	ctx.canvas.width = window.innerWidth;
- 	ctx.canvas.height = window.innerHeight;
-	rows = parseInt(canvasWidth / CELL_RATIO);
-	cols = parseInt(canvasHeight / CELL_RATIO);
-	grid = generateGrid(rows, cols);
-	grid = seedGrid(grid, CELL_COUNT);
-	start();
 }
 
 function printTwoDimArray(arr) {

@@ -4,6 +4,26 @@
 		<link rel="stylesheet" href="app.css">
 	</head>
 	<body>
+		<form id="configForm">
+
+				<h1>The Game of Life</h1>
+
+				<label for="cellCount">How many cells?</label>
+				<input type="number" id="cellCount" required><br>
+
+				<label for="cellRatio">How big cells should be?</label>
+				<input type="number" id="cellRatio" required><br>
+
+				<label for="cellColor">Cell color</label>
+				<input type="text" id="cellColor"><br>
+
+				<label for="backgroundColor">Background color</label>
+				<input type="nutext" id="backgroundColor"><br>
+
+				<button id="play" onclick="setConfig()">Play</button>
+
+
+		</form>
 		<canvas id="gameCanvas" width="400" height="400"></canvas>
 		<script src="app.js"></script>
 	</body>

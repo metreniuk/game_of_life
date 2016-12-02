@@ -1,3 +1,19 @@
 #gameCanvas {
-	
+	visibility: hidden;
+}
+
+#configForm {
+	position: absolute;
+	margin: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 500px;
+	height: 500px;
+	text-align: center;
+}
+
+#configForm * {
+	margin-top: 20px;
 }
