@@ -6,7 +6,7 @@ var ctx = canvas.getContext('2d');
 //VARIABLES
 var grid = [];
 var CELL_RATIO = 8;
-var fps = 6;
+var FPS = 5;
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 var rows = parseInt(canvasHeight / CELL_RATIO);
@@ -36,19 +36,25 @@ function tick() {
 	drawGrid(grid);
 }
 
-var	render = null;
+var timer;
+function render() {
+    timer = setTimeout(function() {
+        requestAnimationFrame(render);
+ 		tick();
+    }, 1000 / FPS); 
+}
 
 function start() {
 	if (!grid.length) init();
-	render = setInterval(tick, 200);
+	render();
 }
 
 function stop() {
-	clearInterval(render);
+	clearTimeout(timer);
 }
 
 function reset() {
-	clearInterval(render);
+	stop();	
 	clearCanvas();
 	grid = [];
 }
