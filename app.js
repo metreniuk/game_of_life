@@ -5,13 +5,15 @@ var ctx = canvas.getContext('2d');
 
 //VARIABLES
 var grid = [];
-var CELL_RATIO = 8;
+var CELL_RATIO = 6;
 var FPS = 5;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 var rows = parseInt(canvasHeight / CELL_RATIO);
 var cols = parseInt(canvasWidth / CELL_RATIO);
-var CELL_COUNT = 1000;
+var CELL_COUNT = 16000;
 var CELL_COLOR = '';
 var CANVAS_COLOR = '';
 
@@ -19,7 +21,7 @@ canvas.style.backgroundColor = CANVAS_COLOR;
 
 //init
 init();
-
+start();
 //fullScreen();
 
 function init() {
@@ -38,6 +40,7 @@ function tick() {
 
 var timer;
 function render() {
+	drawGrid(grid);
     timer = setTimeout(function() {
         requestAnimationFrame(render);
  		tick();
@@ -66,11 +69,10 @@ function draw() {
 }
 
 function fullScreen () {
-	ctx.canvas.width  = window.innerWidth;
-	ctx.canvas.height = window.innerHeight;
-
-	rows = parseInt(window.innerWidth / CELL_RATIO);
-	cols = parseInt(window.innerHeight / CELL_RATIO);
+	ctx.canvas.width = window.innerWidth;
+ 	ctx.canvas.height = window.innerHeight;
+	rows = parseInt(canvasWidth / CELL_RATIO);
+	cols = parseInt(canvasHeight / CELL_RATIO);
 	grid = generateGrid(rows, cols);
 	grid = seedGrid(grid, CELL_COUNT);
 	start();
@@ -107,6 +109,11 @@ function generateGrid(rows, cols) {
 function seedGrid(grid, cellsCount) {
 	var rows = grid.length;
 	var cols = grid[0].length;
+
+	if(cellsCount > (rows * cols)) {
+		cellsCount = rows * cols;
+		console.log("To many cells");
+	}
 
 	for (var i = 0; i < cellsCount; i++) {
 		var r = randomInt(0, rows);

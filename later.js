@@ -64,3 +64,8 @@ var str = "15bo31b$16bo30b$14b3o30b6$44bo2b$44bobo$obo11bo29b2ob$b2o11b4o29b$bo1
 		o.push(r[i].split('o'));
 	}
 	console.log(o);
+
+			<button onclick="draw()">draw</button>
+		<button onclick="start()">start</button>
+		<button onclick="stop()">stop</button>
+		<button onclick="reset()">reset</button>

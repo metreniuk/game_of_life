@@ -60,10 +60,10 @@ game.printGrid(grid1);
 */
 
 //TEST seedGrid
-/*
-var grid1 = game.generateGrid(10,10);
+
+var grid1 = game.generateGrid(400,400);
 var k = 0;
-var c = 10;
+var c = 1000;
 var grid2 = game.seedGrid(grid1, c);
 var rows = grid1.length;
 var cols = grid1[0].length;
@@ -76,7 +76,7 @@ for(var i = 0; i < rows; i++) {
 console.log("TEST seedGrid");
 game.printGrid(grid2);
 console.log("cellsCount " + c + "\ncells alive " + k);
-*/
+
 
 //TEST arraySum
 /*
@@ -133,12 +133,3 @@ function nextGrid(oldGrid) {
 var grid1 = game.generateGrid(50, 50);
 
 */
-
-var s = "15bo31b$16bo30b$14b3o30b6$44bo2b$44bobo$obo11bo29b2ob$b2o11b4o29b$bo13b4o10b2o16b$4b2o9bo2bo9bobo16b$4b2o9b4o8b3o8b2o7b$14b4o8b3o9b2o7b$14bo12b3o17b$28bobo16b$6b2o21b2o16b$7b2o38b$6bo40b$37b2o8b$37bobo7b$37bo";
-	console.log(s);
-var emptyRows = 0;
-for (var i = str.length - 1; i > 0; i--) {
-	if(s[i] == "$") {
-		while(s[i+1].match())
-	}
-}
