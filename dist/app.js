@@ -4,34 +4,31 @@ var canvas = document.getElementById('gameCanvas');
 var ctx = canvas.getContext('2d');
 //VARIABLES
 var grid = [];
-var FPS = void 0,
-    CELL_COUNT = void 0,
-    CELL_RATIO = void 0,
-    CELL_COLOR = void 0,
-    CANVAS_COLOR = void 0;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 var canvasWidth = canvas.width;
 var canvasHeight = canvas.height;
 var rows = parseInt(canvasHeight / CELL_RATIO);
 var cols = parseInt(canvasWidth / CELL_RATIO);
+var FPS = 10;
+var CELL_COUNT = 5000;
+var CELL_RATIO = 4;
+var CELL_COLOR = '';
+var CANVAS_COLOR = '';
 
 function setConfig() {
-	CELL_COUNT = document.getElementById('cellCount').value || rows * cols / 4;
+	CELL_COUNT = document.getElementById('cellCount').value || 6000;
 	CELL_RATIO = document.getElementById('cellRatio').value || 4;
 	rows = parseInt(canvasHeight / CELL_RATIO);
 	cols = parseInt(canvasWidth / CELL_RATIO);
 	CELL_COLOR = document.getElementById('cellColor').value || 'black';
 	CANVAS_COLOR = document.getElementById('backgroundColor').value || 'white';
 	canvas.style.backgroundColor = CANVAS_COLOR;
-	FPS = 10;
 	var configForm = document.getElementById('configForm').style.visibility = 'hidden';
 	canvas.style.visibility = 'visible';
 	init();
 	start();
 }
-
-init();
 
 function init() {
 	rows = parseInt(canvasHeight / CELL_RATIO);
@@ -73,23 +70,44 @@ function reset() {
 function draw() {
 	init();
 	drawGrid(grid);
-	printGrid(grid);
-}
-
-function printTwoDimArray(arr) {
-	var rows = "";
-	for (var i = 0; i < arr.length; i++) {
-		for (var j = 0; j < arr[0].length; j++) {
-			rows += arr[i][j] + " ";
-		}
-		rows += "\n";
-	}
-	console.log(rows);
 }
 
 //return random int between min and max
 function randomInt(min, max) {
 	return Math.floor(Math.random() * max) + min;
+}
+
+function printTwoDimArray(arr) {
+	var rows = "";
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = arr[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var row = _step.value;
+
+			for (var j = 0; j < arr[0].length; j++) {
+				rows += row[j] + " ";
+			}
+			rows += "\n";
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+
+	console.log(rows);
 }
 
 function generateGrid(rows, cols) {
@@ -149,12 +167,9 @@ function nextGrid(oldGrid) {
 	var rows = oldGrid.length;
 	var cols = oldGrid[0].length;
 	var grid = generateGrid(rows, cols);
-
 	var n = 0;
-
 	for (var i = 1; i < rows - 1; i++) {
 		for (var j = 1; j < cols - 1; j++) {
-
 			grid[i][j] = nextCell(oldGrid[i][j], getNeighboursSum(oldGrid, i, j));
 			n = 0;
 		};
@@ -180,3 +195,11 @@ function drawCell(x, y) {
 function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+Clas;
+
+var g = new Game();
+g.start();
+setInterval(function () {
+	g.nextTick();
+}, 1000);

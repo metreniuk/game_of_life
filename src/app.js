@@ -2,20 +2,20 @@ let canvas = document.getElementById('gameCanvas');
 let ctx = canvas.getContext('2d');
 //VARIABLES
 let grid = [];
-let FPS = 10;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 let rows = parseInt(canvasHeight / CELL_RATIO);
 let cols = parseInt(canvasWidth / CELL_RATIO);
+let FPS = 10;
 let CELL_COUNT = 5000;
 let CELL_RATIO = 4;
 let CELL_COLOR = '';
 let CANVAS_COLOR = '';
 
 function setConfig() {
-	CELL_COUNT = document.getElementById('cellCount').value || (rows * cols) / 4;
+	CELL_COUNT = document.getElementById('cellCount').value || 6000;
 	CELL_RATIO = document.getElementById('cellRatio').value || 4;
 	rows = parseInt(canvasHeight / CELL_RATIO);
 	cols = parseInt(canvasWidth / CELL_RATIO);
@@ -27,8 +27,6 @@ function setConfig() {
 	init();
 	start();
 }
-
-init();
 
 function init() {
 	rows = parseInt(canvasHeight / CELL_RATIO);
@@ -71,23 +69,22 @@ function reset() {
 function draw() {
 	init();
 	drawGrid(grid);
-	printGrid(grid);
-}
-
-function printTwoDimArray(arr) {
-	let rows = "";
-	for(let i = 0; i < arr.length; i++) {
-		for (let j = 0; j < arr[0].length; j++) {
-			rows += arr[i][j] + " ";
-		}
-		rows += "\n";
-	}
-	console.log(rows)
 }
 
 //return random int between min and max
 function randomInt(min, max) {
 	return Math.floor(Math.random() * (max)) + min;
+}
+
+function printTwoDimArray(arr) {
+	let rows = "";
+	for(let row of arr) {
+		for (let j = 0; j < arr[0].length; j++) {
+			rows += row[j] + " ";
+		}
+		rows += "\n";
+	}
+	console.log(rows)
 }
 
 function generateGrid(rows, cols) {
@@ -143,7 +140,7 @@ function nextCell(cell, n) {
 }
 
 function getNeighboursSum(grid, i, j) {
-	return oldGrid[i-1][j-1] + grid[i-1][j] + grid[i-1][j+1] + grid[i][j-1] + grid[i][j+1] + grid[i+1][j-1] + grid[i+1][j] + grid[i+1][j+1];
+	return grid[i-1][j-1] + grid[i-1][j] + grid[i-1][j+1] + grid[i][j-1] + grid[i][j+1] + grid[i+1][j-1] + grid[i+1][j] + grid[i+1][j+1];
 }
 
 
@@ -151,9 +148,7 @@ function nextGrid(oldGrid) {
 	let rows = oldGrid.length;
 	let cols = oldGrid[0].length;
 	let grid = generateGrid(rows, cols);
-	
 	let n = 0;
-
 	for (let i = 1; i < rows - 1; i++) {
 		for (let j = 1; j < cols - 1; j++) {
 			grid[i][j] = nextCell(oldGrid[i][j], getNeighboursSum(oldGrid, i, j));
@@ -183,6 +178,12 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+Clas
 
 
+const g = new Game()
+g.start()
+setInterval(() => {
+	g.nextTick()
+}, 1000)
 
