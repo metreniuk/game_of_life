@@ -4,37 +4,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*
-let canvas = document.getElementById('gameCanvas');
-let ctx = canvas.getContext('2d');
-//VARIABLES
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-let canvasWidth = canvas.width;
-let canvasHeight = canvas.height;
-let rows = parseInt(canvasHeight / CELL_RATIO);
-let cols = parseInt(canvasWidth / CELL_RATIO);
-let FPS = 10;
-let CELL_COUNT = 5000;
-let CELL_RATIO = 4;
-let CELL_COLOR = '';
-let CANVAS_COLOR = '';
-
-function setConfig() {
-	CELL_COUNT = document.getElementById('cellCount').value || 6000;
-	CELL_RATIO = document.getElementById('cellRatio').value || 4;
-	rows = parseInt(canvasHeight / CELL_RATIO);
-	cols = parseInt(canvasWidth / CELL_RATIO);
-	CELL_COLOR = document.getElementById('cellColor').value || 'black';
-	CANVAS_COLOR = document.getElementById('backgroundColor').value || 'white';
-	canvas.style.backgroundColor = CANVAS_COLOR;	
-	let configForm = document.getElementById('configForm').style.visibility = 'hidden';
-	canvas.style.visibility = 'visible';
-	init();
-	start();
-}
-*/
-
 //return random int between min and max
 function randomInt(min, max) {
 	return Math.floor(Math.random() * max) + min;
@@ -46,11 +15,13 @@ var Game = function () {
 
 		this.settings = settings;
 		settings.canvasSelector = settings.canvasSelector || "#gameCanvas";
-		settings.fps = settings.fps || 10;
+		settings.fps = parseInt(settings.fps) || 10;
 		settings.cellColor = settings.cellColor || 'black';
 		settings.backgroundColor = settings.backgroundColor || 'white';
-		settings.cellsCount = settings.cellCount || 2000;
-		settings.cellRatio = settings.cellRatio || 4;
+		settings.cellsCount = parseInt(settings.cellCount) || 10000;
+		settings.cellRatio = parseInt(settings.cellRatio) || 4;
+
+		console.log(this.settings);
 
 		var canvas = document.querySelector(settings.canvasSelector);
 		canvas.width = window.innerWidth;
@@ -59,6 +30,7 @@ var Game = function () {
 		this.cols = parseInt(canvas.width / settings.cellRatio);
 		this.canvas = canvas;
 		this.ctx = canvas.getContext("2d");
+		canvas.style.backgroundColor = settings.backgroundColor;
 
 		this.grid = this.generateGrid();
 	}
@@ -156,17 +128,14 @@ var Game = function () {
 	}, {
 		key: 'nextGrid',
 		value: function nextGrid() {
-			var rows = this.rows;
-			var cols = this.cols;
 			var grid = this.generateGrid();
 			var n = 0;
-			for (var i = 1; i < rows - 1; i++) {
-				for (var j = 1; j < cols - 1; j++) {
+			for (var i = 1; i < this.rows - 1; i++) {
+				for (var j = 1; j < this.cols - 1; j++) {
 					grid[i][j] = this.nextCell(this.grid[i][j], this.getNeighboursSum(i, j));
 					n = 0;
 				};
 			};
-
 			this.grid = grid;
 			return grid;
 		}
@@ -182,10 +151,8 @@ var Game = function () {
 	}, {
 		key: 'drawGrid',
 		value: function drawGrid() {
-			var rows = this.rows;
-			var cols = this.cols;
-			for (var i = 0; i < rows; i++) {
-				for (var j = 0; j < cols; j++) {
+			for (var i = 0; i < this.rows; i++) {
+				for (var j = 0; j < this.cols; j++) {
 					if (this.grid[i][j] == 1) this.drawCell(i, j);
 				};
 			};
@@ -217,39 +184,12 @@ var Game = function () {
 	return Game;
 }();
 
-function init() {
-	rows = parseInt(canvasHeight / CELL_RATIO);
-	cols = parseInt(canvasWidth / CELL_RATIO);
-	grid = generateGrid(rows, cols);
-	grid = seedGrid(grid, CELL_COUNT);
-}
-
-function tick() {
-	clearCanvas();
-	grid = nextGrid(grid);
-	drawGrid(grid);
-}
-
-var timer = void 0;
-function render() {
-	drawGrid(grid);
-	timer = setTimeout(function () {
-		requestAnimationFrame(render);
-		tick();
-	}, 1000 / FPS);
-}
-
-function start() {
-	if (!grid.length) init();
-	render();
-}
-
-function draw() {
-	init();
-	drawGrid(grid);
-}
-
-var g = new Game({ 'fps': 30, 'cellRatio': 6 });
+var g = new Game({ 'fps': 30,
+	'cellRatio': 5,
+	'cellsCount': "sdf",
+	'backgroundColor': 'ewrewr',
+	'cellColor': 'asdsad'
+});
 
 g.start();
 setInterval(function () {
